@@ -2,8 +2,10 @@ use clap::Clap;
 use cli_table::{print_stdout, Color, Table, WithTitle};
 use std::fs::read_to_string;
 
+const VERSION: &'static str = env!("CARGO_PKG_VERSION");
+
 #[derive(Clap, Debug)]
-#[clap(version = "1.0.0", author = "Takashi I. <mail@takashiidobe.com>")]
+#[clap(version = VERSION, author = "Takashi I. <mail@takashiidobe.com>")]
 struct Opts {
     file_path: String,
 }
