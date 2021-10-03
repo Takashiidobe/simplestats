@@ -9,7 +9,6 @@ repository = "https://github.com/takashiidobe/simplestats"
 documentation = "https://docs.rs/simplestats"
 description = "Generate simple statistics on line delimited numbers"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [[bin]]
 name = "man"
 path = "src/build.rs"
