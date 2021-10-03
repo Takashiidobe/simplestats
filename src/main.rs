@@ -1,3 +1,4 @@
+use atty::Stream;
 use clap::Clap;
 use cli_table::{print_stdout, Color, Table, WithTitle};
 use std::fs::read_to_string;
@@ -74,6 +75,14 @@ impl Stats {
     }
 }
 
+fn print_simple(stats: &Stats) {
+    println!("max min total count mean stddev");
+    println!(
+        "{} {} {} {} {} {}",
+        stats.max, stats.min, stats.total, stats.count, stats.mean, stats.stddev
+    );
+}
+
 fn main() {
     let opts = Opts::parse();
 
@@ -82,5 +91,9 @@ fn main() {
     let nums: Vec<i64> = str_file.lines().map(|s| s.parse().unwrap()).collect();
 
     let stats = Stats::new(&nums);
-    let _ = print_stdout(vec![stats].with_title());
+    if atty::is(Stream::Stdout) {
+        let _ = print_stdout(vec![stats].with_title());
+    } else {
+        print_simple(&stats);
+    }
 }
