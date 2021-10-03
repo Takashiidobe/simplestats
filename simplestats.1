@@ -1,0 +1,50 @@
+.TH SIMPLESTATS 1
+.SH NAME
+simplestats \- Prints simple statistics on a line delimited file with numbers.
+.SH SYNOPSIS
+\fBsimplestats\fR path
+.SH EXIT STATUS
+.TP
+\fB0\fR
+Successful program execution.
+
+.TP
+\fB1\fR
+Unsuccessful program execution.
+
+.TP
+\fB101\fR
+The program panicked.
+.SH EXAMPLES
+.TP
+Small Example
+\fB$ cat numbers.txt\fR
+.br
+
+                    1 
+                    2 
+                    3
+                    4
+                    5
+                    6
+                    7
+                    8
+                    9
+                    10
+                
+.TP
+Running the program
+\fB$ simplestats numbers.txt\fR
+.br
+
+    +\-\-\-\-\-+\-\-\-\-\-+\-\-\-\-\-\-\-+\-\-\-\-\-\-\-+\-\-\-\-\-\-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-+
+    | max | min | total | count | mean | stddev             |
+    +\-\-\-\-\-+\-\-\-\-\-+\-\-\-\-\-\-\-+\-\-\-\-\-\-\-+\-\-\-\-\-\-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-+
+    | 10  | 1   | 55    | 10    | 5.5  | 2.8722813232690143 |
+    +\-\-\-\-\-+\-\-\-\-\-+\-\-\-\-\-\-\-+\-\-\-\-\-\-\-+\-\-\-\-\-\-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-+
+
+.SH AUTHOR
+.P
+.RS 2
+.nf
+Takashi I <mail@takashiidobe.com>
