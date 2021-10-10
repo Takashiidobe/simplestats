@@ -8,7 +8,7 @@ const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 #[derive(Clap, Debug)]
 #[clap(version = VERSION, author = "Takashi I. <mail@takashiidobe.com>")]
 struct Opts {
-    file_path: String,
+    file_path: Vec<String>,
 }
 
 fn stddev(nums: &[i64]) -> Option<f64> {
@@ -59,11 +59,11 @@ struct Stats {
 impl Stats {
     fn new(nums: &[i64]) -> Stats {
         let total: i64 = nums.iter().sum();
-        let min = *nums.iter().min().unwrap();
-        let max = *nums.iter().max().unwrap();
+        let min = *nums.iter().min().unwrap_or(&0);
+        let max = *nums.iter().max().unwrap_or(&0);
         let count = nums.len();
-        let mean = mean(nums).unwrap();
-        let stddev = stddev(nums).unwrap();
+        let mean = mean(nums).unwrap_or(0.0);
+        let stddev = stddev(nums).unwrap_or(0.0);
         Stats {
             max,
             min,
@@ -86,14 +86,21 @@ fn print_simple(stats: &Stats) {
 fn main() {
     let opts = Opts::parse();
 
-    let str_file = read_to_string(&opts.file_path).unwrap();
+    let multiple_files = opts.file_path.len() > 0;
 
-    let nums: Vec<i64> = str_file.lines().map(|s| s.parse().unwrap()).collect();
+    for file in opts.file_path {
+        if multiple_files {
+            println!("===> {} <===", file);
+        }
+        let str_file = read_to_string(&file).unwrap();
 
-    let stats = Stats::new(&nums);
-    if atty::is(Stream::Stdout) {
-        let _ = print_stdout(vec![stats].with_title());
-    } else {
-        print_simple(&stats);
+        let nums: Vec<i64> = str_file.lines().map(|s| s.parse().unwrap_or(0)).collect();
+
+        let stats = Stats::new(&nums);
+        if atty::is(Stream::Stdout) {
+            let _ = print_stdout(vec![stats].with_title());
+        } else {
+            print_simple(&stats);
+        }
     }
 }
